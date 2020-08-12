@@ -16,7 +16,7 @@ module.exports.trianglify = (event, context, callback) => {
     const canvas = trianglify({
       height: event.height || DEFAULT_HEIGHT,
       width: event.width || DEFAULT_WIDTH,
-      seed,
+      seed: seed.toString(),
     }).toCanvas()
     const image = canvas.toDataURL("image/png").split(',')[1]
 
