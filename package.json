@@ -1,0 +1,8 @@
+{
+  "name": "trianglify-lambda",
+  "version": "1.0.0",
+  "private": false,
+  "dependencies": {
+    "trianglify": "^4.0.0"
+  }
+}
