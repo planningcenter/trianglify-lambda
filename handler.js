@@ -5,7 +5,7 @@ const S3 = require("aws-sdk/clients/s3")
 const s3 = new S3()
 
 const DEFAULT_DIMENSIONS = { width: 500, height: 280 }
-const IMAGE_COUNT = 10
+const IMAGE_COUNT = 1000
 
 module.exports.trianglify = (event, context, callback) => {
   let uploads = []
