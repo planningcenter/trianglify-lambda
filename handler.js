@@ -1,47 +1,30 @@
 const trianglify = require("trianglify")
 const fs = require('fs')
+const S3 = require("aws-sdk/clients/s3")
 
-module.exports.trianglify = (event, context, callback) => {
-  const { height, width } = normalizeDimensions(event)
-  const seed = normalizeSeed(event)
-
-  const canvas = trianglify({
-    height,
-    width,
-    seed,
-  }).toCanvas()
-  const result = canvas.toDataURL("image/png").split(',')[1]
-
-  const response = {
-    isBase64Encoded: true,
-    statusCode: 200,
-    headers: {
-      "Access-Control-Allow-Origin": "*", // Required for CORS support to work
-      "Content-Type": "image/png"
-    },
-    body: result,
-  };
-
-  callback(null, response);
-};
+const s3 = new S3()
 
 const DEFAULT_DIMENSIONS = { width: 500, height: 280 }
-const WIDTH_MAX = 636
-const HEIGHT_MAX = 358
+const IMAGE_COUNT = 10
 
-function normalizeDimensions(event) {
-  try {
-    const dimensions = event.queryStringParameters.g
-    const [widthStr, heightStr] = dimensions.split("x")
-    const width = Math.min(parseInt(widthStr, 10), WIDTH_MAX)
-    const height = Math.min(parseInt(heightStr, 10), HEIGHT_MAX)
+module.exports.trianglify = (event, context, callback) => {
+  let uploads = []
 
-    return { width, height }
-  } catch(e) {
-    return DEFAULT_DIMENSIONS
+  for(let seed = 1; seed <= IMAGE_COUNT; seed++) {
+    const canvas = trianglify({
+      height: event.height || 500,
+      width: event.width || 280,
+      seed,
+    }).toCanvas()
+    const image = canvas.toDataURL("image/png").split(',')[1]
+
+    uploads.push(s3.putObject({ Bucket: process.env.S3_BUCKET, Key: `${seed}-${event.name || "large"}.png`, Body: image }).promise())
   }
-}
 
-function normalizeSeed(event) {
-  return event.pathParameters.id
-}
+  Promise.all(uploads)
+    .then(res => {
+      callback(null, res);
+    }).catch(err => {
+      callback(err, null);
+    });
+};

@@ -3,10 +3,11 @@
   "version": "1.0.0",
   "private": false,
   "dependencies": {
+    "aws-sdk": "^2.731.0",
     "trianglify": "^4.0.0"
   },
   "devDependencies": {
     "serverless": "^1.78.1",
-    "serverless-offline": "^6.5.0"
+    "serverless-dotenv-plugin": "^3.0.0"
   }
 }
