@@ -4,5 +4,9 @@
   "private": false,
   "dependencies": {
     "trianglify": "^4.0.0"
+  },
+  "devDependencies": {
+    "serverless": "^1.78.1",
+    "serverless-offline": "^6.5.0"
   }
 }

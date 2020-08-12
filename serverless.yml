@@ -1,0 +1,31 @@
+# Welcome to serverless. Read the docs
+# https://serverless.com/framework/docs/
+
+# Serverless.yml is the configuration the CLI
+# uses to deploy your code to your provider of choice
+
+# The `service` block is the name of the service
+service: trianglify-lambda
+
+# The `provider` block defines where your service will be deployed
+provider:
+  name: aws
+  runtime: nodejs12.x
+
+plugins:
+  - serverless-offline
+
+# The `functions` block defines what code to deploy
+functions:
+  trianglify:
+    handler: handler.trianglify
+    # The `events` block defines how to trigger the handler.helloWorld code
+    events:
+      - http:
+          path: trianglify/{id}
+          method: get
+          cors: true
+          request:
+            parameters:
+              paths:
+                id: true
