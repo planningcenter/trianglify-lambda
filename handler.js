@@ -25,6 +25,8 @@ module.exports.trianglify = (event, context, callback) => {
       s3.putObject({
         Bucket: process.env.S3_BUCKET,
         Key: `${seed}-${event.name || DEFAULT_NAME}.png`,
+        ContentType: "image/png",
+        ContentEncoding: 'base64',
         Body: image
       }).promise()
     )
