@@ -9,6 +9,7 @@ To run, invoke the function using the data (defaults listed):
 ```
 {
   name: "large",
+  count: 10,
   width: 500,
   height: 280
 }
