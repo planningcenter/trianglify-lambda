@@ -4,7 +4,6 @@ const S3 = require("aws-sdk/clients/s3")
 
 const s3 = new S3()
 
-const DEFAULT_DIMENSIONS = { width: 500, height: 280 }
 const DEFAULT_IMAGE_COUNT = 10
 const DEFAULT_HEIGHT = 280
 const DEFAULT_WIDTH = 500
