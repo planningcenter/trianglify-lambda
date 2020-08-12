@@ -7,11 +7,14 @@ This is a simple lambda function that returns a generated trianglify images.
 Once the function is running (see Deploying or Running locally), you can make requests to the lambda endpoint via a request like this:
 
 ```
-/trianglify/MY_SEED?g=widthx
+/trianglify/MY_SEED?g=WIDTHxHEIGHT
+
+OR WITH FAKE DATA
+
+/trianglify/123?g=640x480
 ```
 
-where 640 is
-
+The g property is not required, but the seed is.
 
 ### Deploying
 
