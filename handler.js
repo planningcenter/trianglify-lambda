@@ -13,7 +13,7 @@ const DEFAULT_NAME = "large"
 module.exports.trianglify = (event, context, callback) => {
   let uploads = []
 
-  for(let seed = 1; seed <= (event.count || DEFAULT_IMAGE_COUNT); seed++) {
+  for(let seed = 0; seed < (event.count || DEFAULT_IMAGE_COUNT); seed++) {
     const canvas = trianglify({
       height: event.height || DEFAULT_HEIGHT,
       width: event.width || DEFAULT_WIDTH,
@@ -26,8 +26,7 @@ module.exports.trianglify = (event, context, callback) => {
         Bucket: process.env.S3_BUCKET,
         Key: `${seed}-${event.name || DEFAULT_NAME}.png`,
         ContentType: "image/png",
-        ContentEncoding: 'base64',
-        Body: image
+        Body: new Buffer(image, "base64")
       }).promise()
     )
   }
